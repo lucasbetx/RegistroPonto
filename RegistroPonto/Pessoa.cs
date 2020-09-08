@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using RegistroPonto.Enumerable;
 
 namespace RegistroPonto
 {
@@ -15,7 +14,9 @@ namespace RegistroPonto
 
         public List<Registro> Registros { get; set; } = new List<Registro>();
 
-        public EntradaSaida ESaida { get; set; }
+        public char ESaida { get; set; }
+
+        public TimeSpan HorasTrabalhadas { get; set; }
 
         public Pessoa()
         {
@@ -23,7 +24,7 @@ namespace RegistroPonto
         }
 
 
-        public Pessoa(Guid id, string nome, EntradaSaida eSaida)
+        public Pessoa(Guid id, string nome, char eSaida)
         {
             Id = id;
             Nome = nome;
@@ -31,20 +32,11 @@ namespace RegistroPonto
             Registros = new List<Registro>();
         }
 
-        public Pessoa(EntradaSaida eSaida)
+        public void CalculaTempo(DateTimeOffset data, DateTimeOffset teste)
         {
-            ESaida = eSaida;
-            Registros = new List<Registro>();
-        }
-
-        public void AddRegistro(Registro registro)
-        {
-            Registros.Add(registro);
-        }
-
-        public void RemoveRegistro(Registro registro)
-        {
-            Registros.Remove(registro);
+            data.ToOffset(new TimeSpan());
+            teste.ToOffset(new TimeSpan());
+            HorasTrabalhadas = data - teste;
         }
 
     }
