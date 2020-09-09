@@ -5,3 +5,10 @@ C:\Users\Computador\Desktop\Registro Ponto\RegistroPonto\RegistroPonto\obj\Debug
 C:\Users\Computador\Desktop\Registro Ponto\RegistroPonto\RegistroPonto\obj\Debug\RegistroPonto.csproj.CoreCompileInputs.cache
 C:\Users\Computador\Desktop\Registro Ponto\RegistroPonto\RegistroPonto\obj\Debug\RegistroPonto.exe
 C:\Users\Computador\Desktop\Registro Ponto\RegistroPonto\RegistroPonto\obj\Debug\RegistroPonto.pdb
+C:\Users\Computador\Downloads\RegistroPonto-master\RegistroPonto\bin\Debug\RegistroPonto.exe.config
+C:\Users\Computador\Downloads\RegistroPonto-master\RegistroPonto\bin\Debug\RegistroPonto.exe
+C:\Users\Computador\Downloads\RegistroPonto-master\RegistroPonto\bin\Debug\RegistroPonto.pdb
+C:\Users\Computador\Downloads\RegistroPonto-master\RegistroPonto\obj\Debug\RegistroPonto.csprojAssemblyReference.cache
+C:\Users\Computador\Downloads\RegistroPonto-master\RegistroPonto\obj\Debug\RegistroPonto.csproj.CoreCompileInputs.cache
+C:\Users\Computador\Downloads\RegistroPonto-master\RegistroPonto\obj\Debug\RegistroPonto.exe
+C:\Users\Computador\Downloads\RegistroPonto-master\RegistroPonto\obj\Debug\RegistroPonto.pdb

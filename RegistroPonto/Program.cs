@@ -13,156 +13,183 @@ namespace RegistroPonto
         {
             try
             {
+
                 List<Pessoa> lista = new List<Pessoa>();
-                Pessoa pess = new Pessoa();
-                Registro registro = new Registro();
-                List<Registro> regis = new List<Registro>();
 
+                var path = @"C:\Users\Computador\Desktop\RegistroPonto.txt";
 
-                Console.WriteLine("Registro de pontos");
-                Console.WriteLine("Você deseja sair do programa ou continuar: ");
-                Console.Write("Digite (c) para continuar ou (s) para sair: ");
+                StreamWriter sw = File.CreateText(path);
+
+                sw.Close();
+
+                Console.WriteLine("---------------------------------------------------------------------------------------------------------------------");
+                Console.WriteLine("Seus reports serão gerados automaticamente na sua área de trabalho!!");
+                Console.WriteLine("Para um report ser gerado por completo, é necessario registrar entrada e saida para o colaborador!!");
+                Console.WriteLine("---------------------------------------------------------------------------------------------------------------------");
+                Console.WriteLine();
+                Console.WriteLine("- REGISTRO DE PONTOS");
+                Console.WriteLine();
+                Console.WriteLine("Você deseja sair do programa ou continuar? ");
+                Console.Write("Digite (c) para continuar ou qualquer caractere para sair: ");
                 char verifica = char.Parse(Console.ReadLine());
 
                 while (verifica == 'c')
                 {
+
+                    Registro registro = new Registro();
+
                     Console.WriteLine();
-                    Console.WriteLine("Você deseja registrar o ponto ou gerar reports: ");
-                    Console.Write("Digite (p) para ponto ou (r) para report : ");
+                    Console.WriteLine("Registre seu ponto agora.");
+                    Console.Write("Digite (p) para ponto: ");
                     char escolha = char.Parse(Console.ReadLine());
 
-                    if (escolha == 'r')
-                    {
-
-
-                        StreamWriter sw = new StreamWriter("C:\\Users\\Computador\\Desktop\\RegistroPonto.txt");
-
-                        List<string> output = new List<string>();
-
-                        foreach (var person in lista.OrderBy(s => s.Nome))
-                        {
-                            sw.WriteLine("------------------------------------------------------");
-
-                            var dateFormat = "yyyy-MM-dd";
-
-                            sw.WriteLine("Nome: " + person.Nome);
-
-                            sw.WriteLine("Data Registro Diario: " + person.Registros);
-
-                            sw.WriteLine("Horas trabalhadas: " + person.HorasTrabalhadas);
-
-                            sw.WriteLine("------------------------------------------------------");
-                        }
-
-
-                        sw.Close();
-                    }
-
-                    else if (escolha == 'p')
+                    if (escolha == 'p')
                     {
                         Console.WriteLine();
                         Console.Write("Digite seu nome completo: ");
                         string verificaNome = Console.ReadLine();
-                        Pessoa pes = lista.Find(x => x.Nome == verificaNome);
+                        Pessoa pessoa = lista.Find(x => x.Nome == verificaNome);
                         Console.WriteLine();
 
-                        if (pes != null)
+                        if (pessoa != null)
                         {
-                            Console.WriteLine("Nome completo do Colaborador: " + pes.Nome);
-                            Console.WriteLine("Id: " + pes.Id);
-                            Console.WriteLine("Entrada e saida: " + pes.ESaida);
-                            Console.WriteLine("Ultimo Registro: " + registro.DataHoraRegistro);
+                            string stsColab;
 
-                            Console.WriteLine("--------------------------------------");
+                            Console.WriteLine("Colaborador ja cadastrado.");
                             Console.WriteLine();
+                            Console.WriteLine("Nome completo do Colaborador: " + pessoa.Nome);
+                            Console.WriteLine("Identificador do colaborador: " + pessoa.Id);
+                            
+                            if (pessoa.ESaida == 'e')
+                            {
+                                stsColab = "Entrada";
+                                Console.WriteLine("Status atual - Entrada ou saida: " + stsColab);
+                            }
+                            else
+                            {
+                                stsColab = "Saida";
+                                Console.WriteLine("Status atual - Entrada ou saida: " + stsColab);
+                            }
+
+                            Console.WriteLine();
+                            Console.WriteLine("---------------------------------------------------------------------------------------------------------------------");
                             Console.WriteLine("Novo Registro: ");
+                            Console.WriteLine("---------------------------------------------------------------------------------------------------------------------");
                             Console.WriteLine();
-                            Guid id = pes.Id;
+                            Guid id = pessoa.Id;
 
                             Console.Write("Entrada ou saida: (e/s): ");
                             char status = char.Parse(Console.ReadLine());
 
                             if (status == 's')
                             {
-                                if (pes.ESaida == 'e')
+                                if (pessoa.ESaida == 'e')
                                 {
                                     Console.Write("Data/Hora de registro do ponto: ");
 
                                     registro.DataHoraRegistro = DateTimeOffset.Now;
                                     Console.WriteLine(registro.DataHoraRegistro);
+
                                     if (lista.Exists(x => x.Id == id))
                                         lista.FirstOrDefault(x => x.Id == id).Registros.Add(registro);
-                                    pes.ESaida = status;
+
+                                    Console.WriteLine();
+                                    Console.WriteLine("Registro Salvo com Sucesso!");
+
+                                    pessoa.ESaida = status;
+
+                                    pessoa.GravaTxt(pessoa.Nome);
                                 }
                                 else
                                 {
                                     Console.WriteLine("Você não pode registrar duas entradas e saidas no mesmo dia!");
                                 }
-
                             }
                             else
                             {
-                                Console.WriteLine("Você não pode registrar duas entradas e saidas no mesmo dia!");
+                                Console.WriteLine("Você não pode registrar duas entradas ou duas saidas no mesmo dia!");
                             }
-
                         }
                         else
                         {
-                            Console.WriteLine("Seu nome ainda não existe no registro de pontos, faça o cadastro!");
+                            Console.WriteLine("Seu nome ainda não existe no registro de pontos, por favor, faça o cadastro!");
                             Console.WriteLine();
+                            Console.WriteLine("---------------------------------------------------------------------------------------------------------------------");
                             Console.WriteLine("Cadastro: ");
+                            Console.WriteLine("---------------------------------------------------------------------------------------------------------------------");
                             Console.WriteLine();
                             Console.Write("Entrada ou saida: (e/s): ");
-
-
 
                             char status = char.Parse(Console.ReadLine());
 
                             while (status != 'e')
                             {
-                                Console.WriteLine("Você precisa registrar uma entrada!");
+                                if (status == 's')
+                                {
+                                    Console.WriteLine();
+                                    Console.WriteLine("Você precisa registrar uma entrada!");
+                                    Console.WriteLine();
+                                }
+                                else
+                                {
+                                    Console.WriteLine();
+                                    Console.WriteLine("Por favor, digite o dado corretamente!");
+                                    Console.WriteLine();
+                                }
                                 Console.Write("Entrada ou saida: (e/s): ");
                                 status = char.Parse(Console.ReadLine());
                             }
 
-                            Console.Write("Nome completo do Colaborador: ");
-                            string nome = Console.ReadLine();
+                            Console.WriteLine();
+                            Console.Write("Nome completo do Colaborador: " + verificaNome);
+                            Console.WriteLine();
 
                             Console.Write("Identificador do colaborador: ");
                             Guid id = Guid.NewGuid();
                             Console.WriteLine(id);
 
-
                             Console.Write("Data/Hora de registro do ponto: ");
 
-                            DateTimeOffset data;
-                            data = DateTimeOffset.Now;
-                            Console.WriteLine(data);
                             registro.DataHoraRegistro = DateTimeOffset.Now;
-                            lista.Add(new Pessoa(id, nome, status));
+
+                            Console.WriteLine(registro.DataHoraRegistro);
+
+                            lista.Add(new Pessoa(id, verificaNome, status));
                             if (lista.Exists(x => x.Id == id))
                                 lista.FirstOrDefault(x => x.Id == id).Registros.Add(registro);
+
+                            Console.WriteLine();
+                            Console.WriteLine("Colaborador Cadastrado com sucesso!");
 
                         }
                     }
                     else
                     {
-                        Console.WriteLine("Você digitou errado, por favor insira o dado correto!");
+                        Console.WriteLine();
+                        Console.WriteLine("Você digitou errado, por favor insira o dado de forma correta!");
                     }
 
                     Console.WriteLine();
+                    Console.WriteLine("---------------------------------------------------------------------------------------------------------------------");
                     Console.Write("Você deseja sair do programa ou continuar (c/s): ");
                     verifica = char.Parse(Console.ReadLine());
 
                 }
+
+                Console.WriteLine();
+                Console.WriteLine("---------------------------------------------------------------------------------------------------------------------");
+                Console.WriteLine("Obrigado por testar o programa !!");
+                Console.WriteLine("Por : Lucas B. Teixeira");
+                Console.WriteLine();
+
             }
             catch (Exception e)
             {
                 Console.WriteLine();
                 Console.WriteLine("Ocorreu um erro : " + e.Message);
+                Console.WriteLine("Por favor, feche o programa e tente novamente!!");
                 Console.WriteLine();
             }
-
         }
     }
 }
